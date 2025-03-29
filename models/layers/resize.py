@@ -13,7 +13,7 @@ class ResizeMethod(Enum):
     LANC = "lanczos"
 
 
-class PreResizeLayerONNX:
+class ResizeLayerONNX:
     def __init__(
         self,
         input_shape: list,
@@ -180,7 +180,7 @@ if __name__ == "__main__":
     print("===============================================")
     print("Creating fixed shape model with NearestNeighbor interpolation...")
     print("===============================================")
-    resize_layer = PreResizeLayerONNX(
+    resize_layer = ResizeLayerONNX(
         input_shape=[-1, 3, 1080, 1920],
         target_shape=[100, 3, 640, 640],
         method=ResizeMethod.NEAR,
@@ -201,7 +201,7 @@ if __name__ == "__main__":
     print("===============================================")
     print("Creating dynamic shape model with Cubic interpolation...")
     print("===============================================")
-    resize_layer_dynamic = PreResizeLayerONNX(
+    resize_layer_dynamic = ResizeLayerONNX(
         input_shape=[1, 3, 1080, 1920],  # Base shape for dynamic
         target_shape=[1, 3, 640, 640],  # Base shape for dynamic
         method=ResizeMethod.CUBE,
