@@ -9,13 +9,8 @@ from typing import List, Tuple
 
 import numpy as np
 import onnx
+from mutil.ops.normalization import NormMethod
 from onnx import TensorProto, helper
-
-
-class NormMethod(Enum):
-    MINMAX = "minmax"
-    ZSCORE = "zscore"
-    COMPOUND = "compound"
 
 
 class NormLayerONNX:
