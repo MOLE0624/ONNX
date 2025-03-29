@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 import onnxruntime as ort
-from mutil.ops.normalization import NormMethod, normalization
+from mutil.ops.normalization import NormMethod, normalize
 
 from ..layers.norm import NormLayerONNX
 
@@ -75,7 +75,7 @@ class TestNormLayerDataONNX(unittest.TestCase):
             mean_vals=self.mean_vals,
             std_vals=self.std_vals,
         )
-        expected_output = normalization(
+        expected_output = normalize(
             self.input_data,
             NormMethod.MINMAX,
             self.min_vals,
@@ -96,7 +96,7 @@ class TestNormLayerDataONNX(unittest.TestCase):
             mean_vals=self.mean_vals,
             std_vals=self.std_vals,
         )
-        expected_output = normalization(
+        expected_output = normalize(
             self.input_data,
             NormMethod.ZSCORE,
             self.min_vals,
@@ -116,7 +116,7 @@ class TestNormLayerDataONNX(unittest.TestCase):
             mean_vals=self.mean_vals,
             std_vals=self.std_vals,
         )
-        expected_output = normalization(
+        expected_output = normalize(
             self.input_data,
             NormMethod.COMPOUND,
             self.min_vals,
