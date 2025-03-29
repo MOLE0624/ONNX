@@ -1,4 +1,12 @@
+# =============================================================================
+# File       : resize_layer_onnx.py
+# Author     : MOLE0624 (GitHub: https://github.com/MOLE0624)
+# Description: This script implements a layer for resizing images in ONNX format.
+# Date       : 2025-03-29
+# =============================================================================
+
 from enum import Enum
+from typing import List, Tuple
 
 import numpy as np
 import onnx
@@ -47,7 +55,11 @@ class ResizeLayerONNX:
         self.crop = crop
         self.dynamic = dynamic
 
-    def get_layer(self, input_name="input", output_name="output"):
+    def get_layer(
+        self, input_name="input", output_name="output"
+    ) -> Tuple[
+        onnx.NodeProto, List[onnx.TensorProto], onnx.ValueInfoProto, onnx.ValueInfoProto
+    ]:
         """Return the ONNX Resize layer as a node with initializers."""
         # Define names for required tensors
         roi_name = "roi"
@@ -87,13 +99,6 @@ class ResizeLayerONNX:
         )
         # print(resize_node)
 
-        return resize_node, [roi_initializer, scales_initializer]
-
-    def get_model(self):
-        """Return the entire ONNX model including input/output definitions."""
-        input_name, output_name = "input", "output"
-        resize_node, initializers = self.get_layer(input_name, output_name)
-
         # Define input/output shapes
         if self.dynamic:
             # For dynamic shapes, we use None for batch and channel dimensions
@@ -128,6 +133,20 @@ class ResizeLayerONNX:
                     self.target_width,
                 ],
             )
+
+        return (
+            resize_node,
+            [roi_initializer, scales_initializer],
+            input_tensor,
+            output_tensor,
+        )
+
+    def get_model(self) -> onnx.ModelProto:
+        """Return the entire ONNX model including input/output definitions."""
+        input_name, output_name = "input", "output"
+        resize_node, initializers, input_tensor, output_tensor = self.get_layer(
+            input_name, output_name
+        )
 
         # Create ONNX graph
         graph = helper.make_graph(
