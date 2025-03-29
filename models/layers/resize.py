@@ -1,9 +1,9 @@
-# =============================================================================
-# File       : resize_layer_onnx.py
+# ================================================================================
+# File       : resize.py
 # Author     : MOLE0624 (GitHub: https://github.com/MOLE0624)
 # Description: This script implements a layer for resizing images in ONNX format.
 # Date       : 2025-03-29
-# =============================================================================
+# ================================================================================
 
 from enum import Enum
 from typing import List, Tuple
